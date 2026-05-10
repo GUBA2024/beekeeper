@@ -113,7 +113,7 @@ INSERT INTO categories (name) VALUES
 
 INSERT INTO users (name, email, password_hash, role) VALUES
 ('Golden Admin', 'admin@goldenhive.local', '$2y$10$DPEMm6xolAqSkToY1m7fQeR2QhWlB3W9vSc7fH6TpivEjfHLa8Mim', 'admin'),
-('Sara Bloom', 'sara@example.com', '$2y$10$DPEMm6xolAqSkToY1m7fQeR2QhWlB3W9vSc7fH6TpivEjfHLa8Mim', 'customer');
+('Sara Bloom', 'sara@example.com', '$2y$10$zE6q.aFeur/ytMRqunnGtOpV8jGqZOOYOixYxCXpBUzO9jh5JqrNe', 'customer');
 
 INSERT INTO admins (user_id, level) VALUES (1, 'super');
 

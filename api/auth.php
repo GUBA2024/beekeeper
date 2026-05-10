@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/auth.php';
 
-action:
 $action = $_GET['action'] ?? '';
 
 if ($action === 'logout') {

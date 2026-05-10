@@ -44,7 +44,7 @@
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.product-card'));
     const query = (search?.value || '').toLowerCase();
-    cards.forEach((card) => { card.style.display = card.dataset.name.includes(query) ? 'block' : 'none'; });
+    cards.forEach((card) => { card.style.display = card.dataset.name.includes(query) ? '' : 'none'; });
     if (sortSelect?.value.startsWith('price')) {
       cards.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
       if (sortSelect.value.endsWith('desc')) cards.reverse();

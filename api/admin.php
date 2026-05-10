@@ -20,13 +20,13 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = (float) ($_POST['price'] ?? 0);
     $categoryId = (int) ($_POST['category_id'] ?? 0);
 
-    if ($name === '' || $description === '' || $price < 0 || $categoryId < 1) {
+    if ($name === '' || $description === '' || $price <= 0 || $categoryId < 1) {
         flash('error', 'Please fill all required fields.');
         header('Location: /admin/index.php');
         exit;
     }
 
-    $imageUrl = '/assets/images/.gitkeep';
+    $imageUrl = 'https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800';
     if (!empty($_FILES['image']['tmp_name']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
         $extension = strtolower(pathinfo((string) $_FILES['image']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg', 'jpeg', 'png', 'webp'];
