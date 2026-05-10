@@ -7,6 +7,7 @@ $stats = [
     'orders' => (int) db()->query('SELECT COUNT(*) FROM orders')->fetchColumn(),
     'customers' => (int) db()->query('SELECT COUNT(*) FROM users')->fetchColumn(),
 ];
+$categories = db()->query('SELECT id, name FROM categories ORDER BY name ASC')->fetchAll();
 ?>
 <section class="page-head"><h1>Admin Dashboard</h1></section>
 <section class="stats">
@@ -22,7 +23,12 @@ $stats = [
             <input name="name" placeholder="Name" required>
             <input name="price" type="number" step="0.01" min="0" required>
             <textarea name="description" placeholder="Description" required></textarea>
-            <input name="category_id" type="number" min="1" placeholder="Category ID" required>
+            <select name="category_id" required>
+                <option value="">Select Category</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= (int) $category['id'] ?>"><?= e($category['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
             <input name="image" type="file" accept="image/*">
             <button class="honey-btn" type="submit">Add Product</button>
         </form>

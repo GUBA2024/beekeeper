@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 CREATE TABLE IF NOT EXISTS notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NULL,
+    source VARCHAR(40) NOT NULL DEFAULT 'system',
     title VARCHAR(180) NOT NULL,
     body TEXT NOT NULL,
     is_read TINYINT(1) DEFAULT 0,

@@ -24,8 +24,8 @@ if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$stmt = db()->prepare('INSERT INTO notifications (user_id, title, body, created_at) VALUES (NULL, :title, :body, NOW())');
-$stmt->execute(['title' => 'Contact: ' . $name, 'body' => $email . ' - ' . $message]);
+$stmt = db()->prepare('INSERT INTO notifications (user_id, source, title, body, created_at) VALUES (NULL, :source, :title, :body, NOW())');
+$stmt->execute(['source' => 'contact', 'title' => 'Contact: ' . $name, 'body' => $email . ' - ' . $message]);
 
 flash('success', 'Message received. Our team will contact you soon.');
 header('Location: /index.php');

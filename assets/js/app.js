@@ -3,6 +3,19 @@
 
   const loader = document.getElementById('loader');
   window.addEventListener('load', () => setTimeout(() => loader?.classList.add('done'), 800));
+  const showToast = (message, type = 'success') => {
+    const wrap = document.querySelector('.toast-wrap') || (() => {
+      const created = document.createElement('div');
+      created.className = 'toast-wrap';
+      document.body.appendChild(created);
+      return created;
+    })();
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    wrap.appendChild(toast);
+    setTimeout(() => toast.remove(), 2400);
+  };
 
   document.querySelectorAll('.counter').forEach((counter) => {
     const target = Number(counter.dataset.target || 0);
@@ -103,7 +116,7 @@
   contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const res = await fetch('/api/contact.php', { method: 'POST', body: new FormData(contactForm) });
-    if (res.ok) alert('Message sent');
+    showToast(res.ok ? 'Message sent' : 'Unable to send message', res.ok ? 'success' : 'error');
     contactForm.reset();
   });
 

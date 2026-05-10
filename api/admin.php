@@ -25,6 +25,13 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: /admin/index.php');
         exit;
     }
+    $categoryCheck = db()->prepare('SELECT id FROM categories WHERE id = :id');
+    $categoryCheck->execute(['id' => $categoryId]);
+    if (!$categoryCheck->fetchColumn()) {
+        flash('error', 'Selected category does not exist.');
+        header('Location: /admin/index.php');
+        exit;
+    }
 
     $imageUrl = 'https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800';
     if (!empty($_FILES['image']['tmp_name']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
