@@ -1,0 +1,40 @@
+# Golden Hive – Apache configuration
+# Works under XAMPP with mod_rewrite enabled (not required, but nice to have).
+
+# ── Security ───────────────────────────────────────────────────────────────
+# Disable directory listing
+Options -Indexes
+
+# Block direct access to sensitive directories/files
+<FilesMatch "\.(sql|md|gitkeep|env|log|ini)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct access to includes/
+    RewriteRule ^includes/ - [F,L]
+
+    # Block direct access to db/
+    RewriteRule ^db/ - [F,L]
+</IfModule>
+
+# ── PHP settings for local development ────────────────────────────────────
+<IfModule mod_php.c>
+    php_flag  display_errors      On
+    php_flag  display_startup_errors On
+    php_value error_reporting     32767
+    php_value default_charset     UTF-8
+</IfModule>
+
+# Same for PHP 8 module name (php8_module)
+<IfModule php8_module>
+    php_flag  display_errors      On
+    php_flag  display_startup_errors On
+    php_value error_reporting     32767
+    php_value default_charset     UTF-8
+</IfModule>
+
+# ── Character encoding ─────────────────────────────────────────────────────
+AddDefaultCharset UTF-8
