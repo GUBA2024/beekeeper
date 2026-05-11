@@ -12,7 +12,7 @@ if (($_GET['action'] ?? '') !== 'place' || $_SERVER['REQUEST_METHOD'] !== 'POST'
 
 if (!csrf_validate($_POST['csrf_token'] ?? null)) {
     flash('error', 'Invalid CSRF token.');
-    header('Location: /checkout.php');
+    header('Location: ' . url('checkout.php'));
     exit;
 }
 
@@ -33,11 +33,14 @@ try {
     }
 
     $order = $pdo->prepare('INSERT INTO orders (user_id, status, total_amount, shipping_address, payment_method, created_at) VALUES (:uid, :status, :total, :address, :payment, NOW())');
+    $fullName = trim((string) ($_POST['full_name'] ?? ''));
+    $rawAddress = trim((string) ($_POST['address'] ?? ''));
+    $address = $fullName !== '' ? $fullName . "\n" . $rawAddress : $rawAddress;
     $order->execute([
         'uid' => current_user()['id'],
         'status' => 'processing',
         'total' => $total,
-        'address' => trim((string) ($_POST['address'] ?? '')),
+        'address' => $address,
         'payment' => trim((string) ($_POST['payment_method'] ?? 'cod')),
     ]);
 
@@ -57,11 +60,11 @@ try {
 
     $pdo->commit();
     flash('success', 'Order placed successfully.');
-    header('Location: /dashboard.php');
+    header('Location: ' . url('dashboard.php'));
     exit;
 } catch (Throwable $e) {
     $pdo->rollBack();
     flash('error', 'Could not place order: ' . $e->getMessage());
-    header('Location: /checkout.php');
+    header('Location: ' . url('checkout.php'));
     exit;
 }

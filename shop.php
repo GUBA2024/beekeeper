@@ -12,8 +12,8 @@ $products = $stmt->fetchAll();
 <section class="product-grid" id="productGrid">
     <?php foreach ($products as $product): ?>
         <article class="product-card" data-name="<?= e(strtolower($product['name'])) ?>" data-price="<?= e((string) $product['price']) ?>">
-            <a href="/product.php?id=<?= (int) $product['id'] ?>">
-                <img loading="lazy" src="<?= e($product['image_url']) ?>" alt="<?= e($product['name']) ?>">
+            <a href="<?= url('product.php?id=' . (int) $product['id']) ?>">
+                <img loading="lazy" src="<?= asset_url($product['image_url']) ?>" alt="<?= e($product['name']) ?>">
                 <h3><?= e($product['name']) ?></h3>
                 <p><?= e($product['category'] ?? 'Uncategorized') ?></p>
                 <strong>$<?= e(number_format((float) $product['price'], 2)) ?></strong>

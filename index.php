@@ -7,7 +7,7 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-content" data-aos="fade-up">
         <h1 data-i18n="hero_title">Golden Hive Luxury Honey</h1>
         <p data-i18n="hero_text">Pure artisanal honey crafted for premium taste and wellness.</p>
-        <a class="honey-btn" href="/shop.php">Shop Collection</a>
+        <a class="honey-btn" href="<?= url('shop.php') ?>">Shop Collection</a>
     </div>
     <svg class="bee-svg" viewBox="0 0 120 40" aria-hidden="true"><circle cx="20" cy="20" r="6"/><circle cx="32" cy="20" r="6"/></svg>
 </section>
@@ -20,9 +20,9 @@ require __DIR__ . '/includes/header.php';
 
 <section class="swiper featured" data-aos="zoom-in">
     <div class="swiper-wrapper">
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800" alt="Royal honey"><h3>Royal Gold</h3><p>$59</p></article>
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=800" alt="Forest honey"><h3>Forest Amber</h3><p>$49</p></article>
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1514996937319-344454492b37?w=800" alt="Clover honey"><h3>Clover Silk</h3><p>$45</p></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800" alt="Royal honey"><h3>Royal Gold</h3><p>$59</p></a></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=800" alt="Forest honey"><h3>Forest Amber</h3><p>$49</p></a></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1514996937319-344454492b37?w=800" alt="Clover honey"><h3>Clover Silk</h3><p>$45</p></a></article>
     </div>
 </section>
 
@@ -39,7 +39,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="newsletter" data-aos="fade-up">
     <h2>Join the Hive</h2>
-    <form action="/api/contact.php" method="post">
+    <form action="<?= url('api/contact.php') ?>" method="post">
         <input name="name" placeholder="Name" required>
         <input name="email" type="email" placeholder="Email" required>
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">

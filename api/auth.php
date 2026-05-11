@@ -9,7 +9,7 @@ $action = $_GET['action'] ?? '';
 if ($action === 'logout') {
     logout_user();
     flash('success', 'Logged out successfully.');
-    header('Location: /auth.php?mode=login');
+    header('Location: ' . url('auth.php?mode=login'));
     exit;
 }
 
@@ -28,13 +28,13 @@ if ($action === 'register') {
 
     if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 8) {
         flash('error', 'Please provide valid registration data.');
-        header('Location: /auth.php?mode=register');
+        header('Location: ' . url('auth.php?mode=register'));
         exit;
     }
 
     $result = register_user($name, strtolower($email), $password);
     flash($result['ok'] ? 'success' : 'error', $result['message']);
-    header('Location: /auth.php?mode=' . ($result['ok'] ? 'login' : 'register'));
+    header('Location: ' . url('auth.php?mode=' . ($result['ok'] ? 'login' : 'register')));
     exit;
 }
 
@@ -44,7 +44,7 @@ if ($action === 'login') {
 
     $result = login_user(strtolower($email), $password);
     flash($result['ok'] ? 'success' : 'error', $result['message']);
-    header('Location: ' . ($result['ok'] ? '/dashboard.php' : '/auth.php?mode=login'));
+    header('Location: ' . ($result['ok'] ? url('dashboard.php') : url('auth.php?mode=login')));
     exit;
 }
 

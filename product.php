@@ -16,7 +16,7 @@ $reviews->execute(['id' => $id]);
 ?>
 <section class="product-details grid two-col">
     <article>
-        <img src="<?= e($product['image_url']) ?>" alt="<?= e($product['name']) ?>" class="zoomable">
+        <img src="<?= asset_url($product['image_url']) ?>" alt="<?= e($product['name']) ?>" class="zoomable">
     </article>
     <article>
         <h1><?= e($product['name']) ?></h1>

@@ -11,17 +11,17 @@ $total = 0.0;
 <section class="cart-list">
     <?php foreach ($items as $item): $line = (float)$item['price'] * (int)$item['quantity']; $total += $line; ?>
     <article class="cart-item glass">
-        <img src="<?= e($item['image_url']) ?>" alt="<?= e($item['name']) ?>">
+        <img src="<?= asset_url($item['image_url']) ?>" alt="<?= e($item['name']) ?>">
         <div>
             <h3><?= e($item['name']) ?></h3>
             <p>$<?= e(number_format((float) $item['price'], 2)) ?></p>
-            <form method="post" action="/api/cart.php?action=update">
+            <form method="post" action="<?= url('api/cart.php?action=update') ?>">
                 <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
                 <input type="hidden" name="cart_id" value="<?= (int) $item['cart_id'] ?>">
                 <input type="number" name="quantity" min="1" value="<?= (int) $item['quantity'] ?>">
                 <button class="ghost-btn" type="submit">Update</button>
             </form>
-            <form method="post" action="/api/cart.php?action=remove">
+            <form method="post" action="<?= url('api/cart.php?action=remove') ?>">
                 <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
                 <input type="hidden" name="cart_id" value="<?= (int) $item['cart_id'] ?>">
                 <button class="ghost-btn" type="submit">Remove</button>
@@ -30,5 +30,5 @@ $total = 0.0;
     </article>
     <?php endforeach; ?>
 </section>
-<section class="cart-total glass"><h2>Total: $<?= e(number_format($total, 2)) ?></h2><a class="honey-btn" href="/checkout.php">Proceed to Checkout</a></section>
+<section class="cart-total glass"><h2>Total: $<?= e(number_format($total, 2)) ?></h2><a class="honey-btn" href="<?= url('checkout.php') ?>">Proceed to Checkout</a></section>
 <?php require __DIR__ . '/includes/footer.php'; ?>
