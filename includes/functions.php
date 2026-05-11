@@ -10,10 +10,14 @@ require_once __DIR__ . '/db.php';
 // (http://localhost/) and in a subdirectory (http://localhost/beekeeper/).
 // Override by setting the APP_URL environment variable, e.g. APP_URL=http://localhost/beekeeper
 if (!defined('APP_BASE')) {
-    if (!empty($_ENV['APP_URL'])) {
-        $parsed = parse_url(rtrim((string) $_ENV['APP_URL'], '/'));
+    $appUrlEnv = (string) (getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? ''));
+    if ($appUrlEnv !== '') {
+        $parsed = parse_url(rtrim($appUrlEnv, '/'));
         define('APP_BASE', rtrim((string) ($parsed['path'] ?? ''), '/'));
     } elseif (!empty($_SERVER['DOCUMENT_ROOT'])) {
+        // Strip the document root from the project directory to get the subpath.
+        // E.g. docRoot=/var/www/html, projectDir=/var/www/html/beekeeper → APP_BASE='/beekeeper'
+        // At domain root they are equal → APP_BASE=''
         $docRoot = rtrim(str_replace('\\', '/', (string) realpath($_SERVER['DOCUMENT_ROOT'])), '/');
         $projectDir = rtrim(str_replace('\\', '/', (string) realpath(__DIR__ . '/..')), '/');
         define('APP_BASE', ($docRoot !== '' && str_starts_with($projectDir, $docRoot))
