@@ -22,25 +22,26 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' | ' . $config['app_name'] : $con
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 </head>
 <body>
+<script>const APP_BASE = <?= json_encode(APP_BASE) ?>;</script>
 <div id="loader"><div class="honey-fill"></div><span>Golden Hive</span></div>
 <div class="honey-cursor"></div>
 <nav class="top-nav glass">
-    <a href="/index.php" class="brand"><i class="fa-solid fa-hexagon"></i> Golden Hive</a>
+    <a href="<?= url('index.php') ?>" class="brand"><i class="fa-solid fa-hexagon"></i> Golden Hive</a>
     <button class="menu-toggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     <ul class="nav-links">
-        <li><a href="/index.php" data-i18n="home">Home</a></li>
-        <li><a href="/shop.php" data-i18n="shop">Shop</a></li>
-        <li><a href="/cart.php" data-i18n="cart">Cart</a></li>
-        <li><a href="/checkout.php" data-i18n="checkout">Checkout</a></li>
+        <li><a href="<?= url('index.php') ?>" data-i18n="home">Home</a></li>
+        <li><a href="<?= url('shop.php') ?>" data-i18n="shop">Shop</a></li>
+        <li><a href="<?= url('cart.php') ?>" data-i18n="cart">Cart</a></li>
+        <li><a href="<?= url('checkout.php') ?>" data-i18n="checkout">Checkout</a></li>
         <?php if ($user): ?>
-            <li><a href="/dashboard.php" data-i18n="dashboard">Dashboard</a></li>
-            <?php if (!empty($user['is_admin'])): ?><li><a href="/admin/index.php">Admin</a></li><?php endif; ?>
-            <li><a href="/api/auth.php?action=logout">Logout</a></li>
+            <li><a href="<?= url('dashboard.php') ?>" data-i18n="dashboard">Dashboard</a></li>
+            <?php if (!empty($user['is_admin'])): ?><li><a href="<?= url('admin/index.php') ?>">Admin</a></li><?php endif; ?>
+            <li><a href="<?= url('api/auth.php?action=logout') ?>">Logout</a></li>
         <?php else: ?>
-            <li><a href="/auth.php" data-i18n="login">Login</a></li>
+            <li><a href="<?= url('auth.php') ?>" data-i18n="login">Login</a></li>
         <?php endif; ?>
     </ul>
     <div class="nav-actions">

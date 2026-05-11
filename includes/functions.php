@@ -5,6 +5,53 @@ declare(strict_types=1);
 require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/db.php';
 
+// Compute APP_BASE: the URL subdirectory path the app is served from.
+// Auto-detects from DOCUMENT_ROOT so the app works both at domain root
+// (http://localhost/) and in a subdirectory (http://localhost/beekeeper/).
+// Override by setting the APP_URL environment variable, e.g. APP_URL=http://localhost/beekeeper
+if (!defined('APP_BASE')) {
+    if (!empty($_ENV['APP_URL'])) {
+        $parsed = parse_url(rtrim((string) $_ENV['APP_URL'], '/'));
+        define('APP_BASE', rtrim((string) ($parsed['path'] ?? ''), '/'));
+    } elseif (!empty($_SERVER['DOCUMENT_ROOT'])) {
+        $docRoot = rtrim(str_replace('\\', '/', (string) realpath($_SERVER['DOCUMENT_ROOT'])), '/');
+        $projectDir = rtrim(str_replace('\\', '/', (string) realpath(__DIR__ . '/..')), '/');
+        define('APP_BASE', ($docRoot !== '' && str_starts_with($projectDir, $docRoot))
+            ? rtrim(substr($projectDir, strlen($docRoot)), '/')
+            : '');
+    } else {
+        define('APP_BASE', '');
+    }
+}
+
+/**
+ * Generate a URL for an internal page/endpoint, respecting the base path.
+ */
+function url(string $path): string
+{
+    return APP_BASE . '/' . ltrim($path, '/');
+}
+
+/**
+ * Generate a URL for a static asset, respecting the base path.
+ */
+function asset(string $path): string
+{
+    return url($path);
+}
+
+/**
+ * Return a full URL for a stored image path.
+ * Full URLs (http/https) are returned unchanged; relative paths get the base prefix.
+ */
+function asset_url(string $path): string
+{
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+        return $path;
+    }
+    return url($path);
+}
+
 function e(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -42,7 +89,7 @@ function is_admin(): bool
 function require_auth(): void
 {
     if (!is_authenticated()) {
-        header('Location: /auth.php?mode=login');
+        header('Location: ' . url('auth.php?mode=login'));
         exit;
     }
 }

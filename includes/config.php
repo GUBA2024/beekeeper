@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'app_name' => 'Golden Hive',
-    'base_url' => rtrim((string) ($_ENV['APP_URL'] ?? 'http://localhost:8000'), '/'),
+    'base_url' => rtrim((string) ($_ENV['APP_URL'] ?? 'http://localhost'), '/'),
     'db' => [
         'host' => (string) ($_ENV['DB_HOST'] ?? '127.0.0.1'),
         'port' => (string) ($_ENV['DB_PORT'] ?? '3306'),

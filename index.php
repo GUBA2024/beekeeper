@@ -7,7 +7,7 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-content" data-aos="fade-up">
         <h1 data-i18n="hero_title">Golden Hive Luxury Honey</h1>
         <p data-i18n="hero_text">Pure artisanal honey crafted for premium taste and wellness.</p>
-        <a class="honey-btn" href="/shop.php">Shop Collection</a>
+        <a class="honey-btn" href="<?= url('shop.php') ?>">Shop Collection</a>
     </div>
     <svg class="bee-svg" viewBox="0 0 120 40" aria-hidden="true"><circle cx="20" cy="20" r="6"/><circle cx="32" cy="20" r="6"/></svg>
 </section>
@@ -39,7 +39,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="newsletter" data-aos="fade-up">
     <h2>Join the Hive</h2>
-    <form action="/api/contact.php" method="post">
+    <form action="<?= url('api/contact.php') ?>" method="post">
         <input name="name" placeholder="Name" required>
         <input name="email" type="email" placeholder="Email" required>
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">

@@ -8,7 +8,7 @@ require_admin();
 
 if (!csrf_validate($_POST['csrf_token'] ?? null)) {
     flash('error', 'Invalid CSRF token.');
-    header('Location: /admin/index.php');
+    header('Location: ' . url('admin/index.php'));
     exit;
 }
 
@@ -22,14 +22,14 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($name === '' || $description === '' || $price <= 0 || $categoryId < 1) {
         flash('error', 'Please fill all required fields.');
-        header('Location: /admin/index.php');
+        header('Location: ' . url('admin/index.php'));
         exit;
     }
     $categoryCheck = db()->prepare('SELECT id FROM categories WHERE id = :id');
     $categoryCheck->execute(['id' => $categoryId]);
     if (!$categoryCheck->fetchColumn()) {
         flash('error', 'Selected category does not exist.');
-        header('Location: /admin/index.php');
+        header('Location: ' . url('admin/index.php'));
         exit;
     }
 
@@ -41,7 +41,7 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileName = 'product_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
             $dest = __DIR__ . '/../uploads/' . $fileName;
             if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
-                $imageUrl = '/uploads/' . $fileName;
+                $imageUrl = 'uploads/' . $fileName;
             }
         }
     }
@@ -57,9 +57,9 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     flash('success', 'Product created.');
-    header('Location: /admin/index.php');
+    header('Location: ' . url('admin/index.php'));
     exit;
 }
 
 flash('error', 'Invalid admin action.');
-header('Location: /admin/index.php');
+header('Location: ' . url('admin/index.php'));

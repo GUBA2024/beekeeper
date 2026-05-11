@@ -10,7 +10,7 @@ $uid = current_user()['id'];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !csrf_validate($_POST['csrf_token'] ?? null)) {
     flash('error', 'Invalid request.');
-    header('Location: /cart.php');
+    header('Location: ' . url('cart.php'));
     exit;
 }
 
@@ -21,7 +21,7 @@ if ($action === 'add') {
     $stmt = db()->prepare('INSERT INTO cart (user_id, product_id, quantity, created_at) VALUES (:uid, :pid, :qty, NOW()) ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)');
     $stmt->execute(['uid' => $uid, 'pid' => $productId, 'qty' => $quantity]);
     flash('success', 'Added to cart.');
-    header('Location: /cart.php');
+    header('Location: ' . url('cart.php'));
     exit;
 }
 
@@ -31,7 +31,7 @@ if ($action === 'update') {
     $stmt = db()->prepare('UPDATE cart SET quantity = :qty WHERE id = :id AND user_id = :uid');
     $stmt->execute(['qty' => $quantity, 'id' => $cartId, 'uid' => $uid]);
     flash('success', 'Cart updated.');
-    header('Location: /cart.php');
+    header('Location: ' . url('cart.php'));
     exit;
 }
 
@@ -40,9 +40,9 @@ if ($action === 'remove') {
     $stmt = db()->prepare('DELETE FROM cart WHERE id = :id AND user_id = :uid');
     $stmt->execute(['id' => $cartId, 'uid' => $uid]);
     flash('success', 'Item removed.');
-    header('Location: /cart.php');
+    header('Location: ' . url('cart.php'));
     exit;
 }
 
 flash('error', 'Unknown cart action.');
-header('Location: /cart.php');
+header('Location: ' . url('cart.php'));

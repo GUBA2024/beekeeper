@@ -18,7 +18,7 @@ $categories = db()->query('SELECT id, name FROM categories ORDER BY name ASC')->
 <section class="grid two-col">
     <article class="glass">
         <h2>Manage Products</h2>
-        <form method="post" action="/api/admin.php?action=create_product" enctype="multipart/form-data">
+        <form method="post" action="<?= url('api/admin.php?action=create_product') ?>" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
             <input name="name" placeholder="Name" required>
             <input name="price" type="number" step="0.01" min="0" required>

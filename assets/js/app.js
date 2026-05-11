@@ -42,7 +42,7 @@
       formData.append('csrf_token', document.querySelector('input[name="csrf_token"]')?.value || '');
       formData.append('product_id', productId);
       formData.append('quantity', document.getElementById('qty')?.value || '1');
-      fetch('/api/cart.php?action=add', { method: 'POST', body: formData }).then(() => {
+      fetch(APP_BASE + '/api/cart.php?action=add', { method: 'POST', body: formData }).then(() => {
         btn.textContent = 'Added ✓';
         gsap.fromTo(btn, { scale: 1 }, { scale: 1.05, yoyo: true, repeat: 1, duration: .2 });
       });
@@ -115,7 +115,7 @@
   const contactForm = document.getElementById('contactForm');
   contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/contact.php', { method: 'POST', body: new FormData(contactForm) });
+    const res = await fetch(APP_BASE + '/api/contact.php', { method: 'POST', body: new FormData(contactForm) });
     showToast(res.ok ? 'Message sent' : 'Unable to send message', res.ok ? 'success' : 'error');
     contactForm.reset();
   });

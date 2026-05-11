@@ -5,7 +5,7 @@ require_auth();
 ?>
 <section class="page-head"><h1>Checkout</h1></section>
 <section class="grid two-col">
-    <form class="glass" method="post" action="/api/orders.php?action=place">
+    <form class="glass" method="post" action="<?= url('api/orders.php?action=place') ?>">
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
         <label>Full Name<input name="full_name" required></label>
         <label>Email<input name="email" type="email" required value="<?= e(current_user()['email']) ?>"></label>

@@ -12,7 +12,7 @@ if (($_GET['action'] ?? '') !== 'place' || $_SERVER['REQUEST_METHOD'] !== 'POST'
 
 if (!csrf_validate($_POST['csrf_token'] ?? null)) {
     flash('error', 'Invalid CSRF token.');
-    header('Location: /checkout.php');
+    header('Location: ' . url('checkout.php'));
     exit;
 }
 
@@ -57,11 +57,11 @@ try {
 
     $pdo->commit();
     flash('success', 'Order placed successfully.');
-    header('Location: /dashboard.php');
+    header('Location: ' . url('dashboard.php'));
     exit;
 } catch (Throwable $e) {
     $pdo->rollBack();
     flash('error', 'Could not place order: ' . $e->getMessage());
-    header('Location: /checkout.php');
+    header('Location: ' . url('checkout.php'));
     exit;
 }

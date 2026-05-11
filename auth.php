@@ -5,11 +5,11 @@ $mode = $_GET['mode'] ?? 'login';
 ?>
 <section class="auth-wrap glass">
     <div class="auth-tabs">
-        <a href="/auth.php?mode=login" class="<?= $mode === 'login' ? 'active' : '' ?>">Login</a>
-        <a href="/auth.php?mode=register" class="<?= $mode === 'register' ? 'active' : '' ?>">Register</a>
+        <a href="<?= url('auth.php?mode=login') ?>" class="<?= $mode === 'login' ? 'active' : '' ?>">Login</a>
+        <a href="<?= url('auth.php?mode=register') ?>" class="<?= $mode === 'register' ? 'active' : '' ?>">Register</a>
     </div>
     <?php if ($mode === 'register'): ?>
-    <form method="post" action="/api/auth.php?action=register">
+    <form method="post" action="<?= url('api/auth.php?action=register') ?>">
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
         <input name="name" placeholder="Name" required>
         <input name="email" type="email" placeholder="Email" required>
@@ -17,7 +17,7 @@ $mode = $_GET['mode'] ?? 'login';
         <button class="honey-btn" type="submit">Create Account</button>
     </form>
     <?php else: ?>
-    <form method="post" action="/api/auth.php?action=login">
+    <form method="post" action="<?= url('api/auth.php?action=login') ?>">
         <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
         <input name="email" type="email" placeholder="Email" required>
         <input id="passwordInput" name="password" type="password" placeholder="Password" required>

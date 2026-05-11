@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 if (!csrf_validate($_POST['csrf_token'] ?? null)) {
     flash('error', 'Security validation failed.');
-    header('Location: /index.php');
+    header('Location: ' . url('index.php'));
     exit;
 }
 
@@ -20,7 +20,7 @@ $message = trim((string) ($_POST['message'] ?? 'Newsletter subscription'));
 
 if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     flash('error', 'Invalid contact details.');
-    header('Location: /index.php');
+    header('Location: ' . url('index.php'));
     exit;
 }
 
@@ -28,4 +28,4 @@ $stmt = db()->prepare('INSERT INTO notifications (user_id, source, title, body, 
 $stmt->execute(['source' => 'contact', 'title' => 'Contact: ' . $name, 'body' => $email . ' - ' . $message]);
 
 flash('success', 'Message received. Our team will contact you soon.');
-header('Location: /index.php');
+header('Location: ' . url('index.php'));
