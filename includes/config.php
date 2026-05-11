@@ -2,15 +2,33 @@
 
 declare(strict_types=1);
 
+function env_value(string $key, string $default = ''): string
+{
+    $value = getenv($key);
+    if ($value !== false && $value !== '') {
+        return (string) $value;
+    }
+
+    if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
+        return (string) $_ENV[$key];
+    }
+
+    if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') {
+        return (string) $_SERVER[$key];
+    }
+
+    return $default;
+}
+
 return [
     'app_name' => 'Golden Hive',
-    'base_url' => rtrim((string) (getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? 'http://localhost')), '/'),
+    'base_url' => rtrim(env_value('APP_URL', 'http://localhost'), '/'),
     'db' => [
-        'host' => (string) ($_ENV['DB_HOST'] ?? '127.0.0.1'),
-        'port' => (string) ($_ENV['DB_PORT'] ?? '3306'),
-        'name' => (string) ($_ENV['DB_NAME'] ?? 'beekeeper'),
-        'user' => (string) ($_ENV['DB_USER'] ?? 'root'),
-        'pass' => (string) ($_ENV['DB_PASS'] ?? ''),
+        'host' => env_value('DB_HOST', '127.0.0.1'),
+        'port' => env_value('DB_PORT', '3306'),
+        'name' => env_value('DB_NAME', 'beekeeper'),
+        'user' => env_value('DB_USER', 'root'),
+        'pass' => env_value('DB_PASS', ''),
         'charset' => 'utf8mb4',
     ],
     'session' => [
