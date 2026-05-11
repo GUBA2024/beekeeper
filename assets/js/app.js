@@ -45,10 +45,21 @@
       formData.append('csrf_token', document.querySelector('input[name="csrf_token"]')?.value || '');
       formData.append('product_id', productId);
       formData.append('quantity', document.getElementById('qty')?.value || '1');
-      fetch(appUrl('/api/cart.php?action=add'), { method: 'POST', body: formData }).then(() => {
-        btn.textContent = 'Added ✓';
-        gsap.fromTo(btn, { scale: 1 }, { scale: 1.05, yoyo: true, repeat: 1, duration: .2 });
-      });
+      fetch(appUrl('/api/cart.php?action=add'), { method: 'POST', body: formData })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.redirect) {
+            window.location.href = data.redirect;
+            return;
+          }
+          if (data.ok) {
+            btn.textContent = 'Added ✓';
+            gsap.fromTo(btn, { scale: 1 }, { scale: 1.05, yoyo: true, repeat: 1, duration: .2 });
+          } else {
+            showToast(data.error || 'Could not add to cart', 'error');
+          }
+        })
+        .catch(() => showToast('Network error', 'error'));
     });
   });
 

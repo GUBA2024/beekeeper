@@ -20,9 +20,9 @@ require __DIR__ . '/includes/header.php';
 
 <section class="swiper featured" data-aos="zoom-in">
     <div class="swiper-wrapper">
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800" alt="Royal honey"><h3>Royal Gold</h3><p>$59</p></article>
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=800" alt="Forest honey"><h3>Forest Amber</h3><p>$49</p></article>
-        <article class="swiper-slide product-card"><img loading="lazy" src="https://images.unsplash.com/photo-1514996937319-344454492b37?w=800" alt="Clover honey"><h3>Clover Silk</h3><p>$45</p></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1471943038886-87c772c31367?w=800" alt="Royal honey"><h3>Royal Gold</h3><p>$59</p></a></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=800" alt="Forest honey"><h3>Forest Amber</h3><p>$49</p></a></article>
+        <article class="swiper-slide product-card"><a href="<?= url('shop.php') ?>"><img loading="lazy" src="https://images.unsplash.com/photo-1514996937319-344454492b37?w=800" alt="Clover honey"><h3>Clover Silk</h3><p>$45</p></a></article>
     </div>
 </section>
 

@@ -33,11 +33,14 @@ try {
     }
 
     $order = $pdo->prepare('INSERT INTO orders (user_id, status, total_amount, shipping_address, payment_method, created_at) VALUES (:uid, :status, :total, :address, :payment, NOW())');
+    $fullName = trim((string) ($_POST['full_name'] ?? ''));
+    $rawAddress = trim((string) ($_POST['address'] ?? ''));
+    $address = $fullName !== '' ? $fullName . "\n" . $rawAddress : $rawAddress;
     $order->execute([
         'uid' => current_user()['id'],
         'status' => 'processing',
         'total' => $total,
-        'address' => trim((string) ($_POST['address'] ?? '')),
+        'address' => $address,
         'payment' => trim((string) ($_POST['payment_method'] ?? 'cod')),
     ]);
 

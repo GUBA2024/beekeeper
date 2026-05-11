@@ -63,3 +63,4 @@ if ($action === 'create_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 flash('error', 'Invalid admin action.');
 header('Location: ' . url('admin/index.php'));
+exit;

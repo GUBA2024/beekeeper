@@ -29,3 +29,4 @@ $stmt->execute(['source' => 'contact', 'title' => 'Contact: ' . $name, 'body' =>
 
 flash('success', 'Message received. Our team will contact you soon.');
 header('Location: ' . url('index.php'));
+exit;
