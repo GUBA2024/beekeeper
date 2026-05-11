@@ -10,7 +10,7 @@ require_once __DIR__ . '/db.php';
 // (http://localhost/) and in a subdirectory (http://localhost/beekeeper/).
 // Override by setting the APP_URL environment variable, e.g. APP_URL=http://localhost/beekeeper
 if (!defined('APP_BASE')) {
-    $appUrlEnv = (string) (getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? ''));
+    $appUrlEnv = (string) (getenv('APP_URL') ?: ($_ENV['APP_URL'] ?? ($_SERVER['APP_URL'] ?? '')));
     if ($appUrlEnv !== '') {
         $parsed = parse_url(rtrim($appUrlEnv, '/'));
         define('APP_BASE', rtrim((string) ($parsed['path'] ?? ''), '/'));
